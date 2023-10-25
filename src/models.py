@@ -6,7 +6,7 @@ from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from torchvision.models.detection.mask_rcnn import MaskRCNNPredictor, MaskRCNN
 
 
-def format_MaskRCNN(num_classes:int) -> MaskRCNNPredictor:
+def format_MaskRCNN(num_classes:int) -> MaskRCNN:
     """Modify a pretrained model to a specific task by formating the final layer.
 
     Parameters
