@@ -1,0 +1,9 @@
+ipykernel
+numpy
+opencv-python-headless==4.8.1.78
+pandas
+pycocotools
+seaborn
+supervision
+torch
+torchvision
