@@ -22,6 +22,7 @@ EDM_DEPS = [
 
 PIP_DEPS = [
     "ipykernel",
+    "lightning",
     'numpy',
     "opencv-python-headless==4.8.1.78",
     'pandas',
