@@ -2,9 +2,9 @@ import os
 import torch
 
 
-
 def prerun(): 
     print(f'\nPytorch version: {torch.__version__}')
+    print(f"CPU count:  {os.cpu_count()}") 
     os.system('nvcc --version')
     # setting device on GPU if available, else CPU
 
