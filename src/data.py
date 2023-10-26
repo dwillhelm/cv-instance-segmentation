@@ -24,9 +24,9 @@ class CustomDataset(torch.utils.data.Dataset):
 
     def __init__(self, root:Union[str, PathLike], transforms=None):
         self.root = str(root)
+
         self.transforms = transforms
-        # load all image files, sorting them to
-        # ensure that they are aligned
+        # load all image files, sorting them to ensure that they are aligned
         self.imgs = list(sorted(os.listdir(os.path.join(root, "PNGImages"))))
         self.masks = list(sorted(os.listdir(os.path.join(root, "PedMasks"))))
 
@@ -36,14 +36,13 @@ class CustomDataset(torch.utils.data.Dataset):
         mask_path = os.path.join(self.root, "PedMasks", self.masks[idx])
         img = read_image(img_path)
         mask = read_image(mask_path)
+
         # instances are encoded as different colors
         obj_ids = torch.unique(mask)
-        # first id is the background, so remove it
         obj_ids = obj_ids[1:]
         num_objs = len(obj_ids)
 
-        # split the color-encoded mask into a set
-        # of binary masks
+        # split the color-encoded mask into a set of binary masks
         masks = (mask == obj_ids[:, None, None]).to(dtype=torch.uint8)
 
         # get bounding box coordinates for each mask

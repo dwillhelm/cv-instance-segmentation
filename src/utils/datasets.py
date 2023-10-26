@@ -27,14 +27,15 @@ class IOMixIn:
     
     def unzip_file(self, target:FilePath, dst:FilePath=None):
         target = Path(target)
-        dst = target.with_suffix("") if dst is None else dst
+        dst = target.parent if dst is None else dst
         with zipfile.ZipFile(target, 'r') as fh: 
             fh.extractall(dst)
 
-class PennFundanDataset(IOMixIn): 
+
+class PennFundanDatasetLoader(IOMixIn): 
 
     url = "https://www.cis.upenn.edu/~jshi/ped_html/PennFudanPed.zip"
-    dataset_dir_name = "penn-fund-test"
+    dataset_dir_name = Path(url).with_suffix("").name
 
     def __init__(self, location:FilePath):
         """Prepare the Penn Fundan Pedestrian dataset. 
@@ -56,7 +57,13 @@ class PennFundanDataset(IOMixIn):
             logger.warn("A local dataset was not found, downloading from URL.")
             zip_path = self.root.with_suffix(".zip")
             self.download_url(self.url, save_path=zip_path)
-            self.unzip_file(target=zip_path, dst=self.root)
+            self.unzip_file(target=zip_path)
 
-    def get_path(self): 
-        return Path(self.root)
+    def exists(self):     
+        return self.root.exists()
+
+    def get_path(self):
+        if self.exists(): 
+            return Path(self.root)
+        else: 
+            raise FileExistsError()

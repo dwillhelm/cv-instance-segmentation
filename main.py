@@ -1,4 +1,5 @@
 from pathlib import Path
+import logging
 
 import torch
 from torch.utils.data import DataLoader
@@ -7,20 +8,22 @@ from src.data import CustomDataset, get_transform
 from src.models.models import format_MaskRCNN
 from src.engine import train_one_epoch, evaluate
 import src.utils as utils
-from src.utils.datasets import PennFundanDataset
+from src.utils.datasets import PennFundanDatasetLoader
+from prerun import prerun
 
-
-# === training config === # 
+# === training config === #
 DATA_DIR = Path('./data')
 if DATA_DIR.exists() is False: 
     DATA_DIR.mkdir(parents=True)
 
 DEVICE = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 NUM_CLASSES = 2
-NUM_EPOCHS = 5
+NUM_EPOCHS = 1
+
+prerun() 
 
 # use our dataset and defined transformations
-dataset_path = PennFundanDataset(location=DATA_DIR).get_path() 
+dataset_path = PennFundanDatasetLoader(location=DATA_DIR).get_path() 
 dataset = CustomDataset(dataset_path, get_transform(train=True))
 dataset_test = CustomDataset(dataset_path, get_transform(train=False))
 
