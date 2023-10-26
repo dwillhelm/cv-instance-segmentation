@@ -80,3 +80,6 @@ for epoch in range(NUM_EPOCHS):
     # evaluate on the test dataset
     evaluate(model, data_loader_test, device=DEVICE)
 
+# save model
+logs = Path('./logs'); logs.mkdir(parents=True, exist_ok=True)
+torch.save(model, logs / 'model.pth')
