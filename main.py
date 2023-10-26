@@ -4,10 +4,10 @@ import torch
 from torch.utils.data import DataLoader
 
 from src.data import CustomDataset, get_transform
-from src.models import format_MaskRCNN
+from src.models.models import format_MaskRCNN
 from src.engine import train_one_epoch, evaluate
 import src.utils as utils
-from utils.datasets import PennFundanDataset
+from src.utils.datasets import PennFundanDataset
 
 DATA_DIR = Path('./data')
 DEVICE = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
