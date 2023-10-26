@@ -19,10 +19,6 @@ DEVICE = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 NUM_CLASSES = 2
 NUM_EPOCHS = 5
 
-
-# our dataset has two classes only - background and person
-num_classes = NUM_CLASSES
-
 # use our dataset and defined transformations
 dataset_path = PennFundanDataset(location=DATA_DIR).get_path() 
 dataset = CustomDataset(dataset_path, get_transform(train=True))
@@ -51,7 +47,7 @@ data_loader_test = torch.utils.data.DataLoader(
 )
 
 # get the model using our helper function
-model = format_MaskRCNN(num_classes)
+model = format_MaskRCNN(NUM_CLASSES)
 
 # move model to the right device
 model.to(DEVICE)
