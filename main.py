@@ -9,14 +9,19 @@ from src.engine import train_one_epoch, evaluate
 import src.utils as utils
 from src.utils.datasets import PennFundanDataset
 
-DATA_DIR = Path('./data')
-DEVICE = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
+# === training config === # 
+DATA_DIR = Path('./data')
 if DATA_DIR.exists() is False: 
     DATA_DIR.mkdir(parents=True)
 
+DEVICE = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+NUM_CLASSES = 2
+NUM_EPOCHS = 5
+
+
 # our dataset has two classes only - background and person
-num_classes = 2
+num_classes = NUM_CLASSES
 
 # use our dataset and defined transformations
 dataset_path = PennFundanDataset(location=DATA_DIR).get_path() 
@@ -67,10 +72,7 @@ lr_scheduler = torch.optim.lr_scheduler.StepLR(
     gamma=0.1
 )
 
-# let's train it for 5 epochs
-num_epochs = 5
-
-for epoch in range(num_epochs):
+for epoch in range(NUM_EPOCHS):
     # train for one epoch, printing every 10 iterations
     train_one_epoch(model, optimizer, data_loader, DEVICE, epoch, print_freq=1)
     # update the learning rate

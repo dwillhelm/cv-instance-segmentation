@@ -36,7 +36,14 @@ class PennFundanDataset(IOMixIn):
     url = "https://www.cis.upenn.edu/~jshi/ped_html/PennFudanPed.zip"
     dataset_dir_name = "penn-fund-test"
 
-    def __init__(self, location:FilePath): 
+    def __init__(self, location:FilePath):
+        """Prepare the Penn Fundan Pedestrian dataset. 
+
+        Parameters
+        ----------
+        location : FilePath
+            The location (i.e., folder) to store the dataset. 
+        """
         self.location = Path(location)
         self.root = self.location / self.dataset_dir_name
 
