@@ -27,6 +27,7 @@ PIP_DEPS = [
     "opencv-python-headless==4.8.1.78",
     'pandas',
     'pycocotools',
+    'scikit-learn',
     'seaborn', 
     'supervision',
     'torch', 
