@@ -4,6 +4,8 @@
 ### Custom Ignores ### 
 data/
 logs/
+lightning_logs/
+**/scratch.py
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
