@@ -23,6 +23,8 @@ NUM_CLASSES = 2
 NUM_EPOCHS = 1
 DEBUG = True
 
+prerun() 
+
 dataset_path = PennFundanDatasetLoader(location=DATA_DIR).get_path() 
 dataset = CustomDataset(dataset_path, get_transform(train=True))
 dataset_test = CustomDataset(dataset_path, get_transform(train=False))
@@ -46,5 +48,11 @@ data_loader_train = torch.utils.data.DataLoader(
 model = VGCFModel(fiber_type='width')
 
 # get traininer
-trainer = Trainer(log_every_n_steps=1)
+trainer = Trainer(
+    log_every_n_steps=1,
+    max_epochs=1,
+    enable_model_summary=True,
+    enable_progress_bar=True,
+    enable_checkpointing=True,
+)
 trainer.fit(model=model, train_dataloaders=data_loader_train)

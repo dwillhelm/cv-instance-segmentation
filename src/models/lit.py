@@ -20,31 +20,36 @@ class VGCFModel(pl.LightningModule):
         elif fiber_type == "width": 
             ... 
         
-        model = torchvision.models.detection.maskrcnn_resnet50_fpn(weights="DEFAULT")
+        self.model = torchvision.models.detection.maskrcnn_resnet50_fpn(
+            weights="DEFAULT",
+            trainable_backbone_layers=0
+        )
         num_classes = 2 # background and object (fibers, a person, etc.)
 
         # get number of input features for the classifier
-        in_features = model.roi_heads.box_predictor.cls_score.in_features
+        in_features = self.model.roi_heads.box_predictor.cls_score.in_features
         # replace the pre-trained head with a new one
-        model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes)
+        self.model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes)
 
         # now get the number of input features for the mask classifier
-        in_features_mask = model.roi_heads.mask_predictor.conv5_mask.in_channels
+        in_features_mask = self.model.roi_heads.mask_predictor.conv5_mask.in_channels
         hidden_layer = 256
         # and replace the mask predictor with a new one
-        model.roi_heads.mask_predictor = MaskRCNNPredictor(
+        self.model.roi_heads.mask_predictor = MaskRCNNPredictor(
             in_features_mask,
             hidden_layer,
             num_classes,
         )
-        self.model = model
     
     def forward(self, images, targets) -> Any:
-        return self.model(images, targets)
+        self.model.eval()
+        with torch.no_grad(): 
+            out = self.model(images, targets)
+        return out
         
     def shared_step(self, batch): 
         images, targets = batch
-        out:dict = self(images, targets)
+        out:dict = self.model(images, targets)
         loss = sum(_loss for _loss in out.values())
         return loss
     
