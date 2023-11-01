@@ -60,7 +60,14 @@ class VGCFModel(pl.LightningModule):
     def validation_step(self, batch, batch_idx) -> STEP_OUTPUT:
         loss = self.shared_step(batch)
         return loss
-        
+
+    def predict_step(self, images):
+        self.eval()
+        with torch.no_grad(): 
+            self.model.eval()
+            prediction = self.model(images)
+        return prediction
+
     def configure_optimizers(self) -> OptimizerLRScheduler:
         params = [p for p in self.model.parameters() if p.requires_grad]
         optimizer = torch.optim.SGD(params, lr=0.005, momentum=0.9, weight_decay=0.0005)
