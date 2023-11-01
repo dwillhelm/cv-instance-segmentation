@@ -18,6 +18,8 @@ PY_VER = 3.8
 EDM_DEPS = [
     "pip",
     "setuptools", 
+    "torch", 
+    "torchvision", 
 ]
 
 PIP_DEPS = [
@@ -30,8 +32,6 @@ PIP_DEPS = [
     'scikit-learn',
     'seaborn', 
     'supervision',
-    'torch', 
-    'torchvision',
     'tqdm',
 ] 
 

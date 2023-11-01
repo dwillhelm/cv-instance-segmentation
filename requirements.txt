@@ -7,6 +7,4 @@ pycocotools
 scikit-learn
 seaborn
 supervision
-torch
-torchvision
 tqdm
