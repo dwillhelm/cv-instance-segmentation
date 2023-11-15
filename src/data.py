@@ -16,6 +16,9 @@ from torchvision.transforms.v2 import functional as F
 from torchvision.transforms import v2 as T
 from sklearn.model_selection import train_test_split
 
+# img = read_image('../data/PennFudanPed/PedMasks/FudanPed00001_mask.png')
+# img
+
 def split_data(dataset:Dataset, test_size:float=0.2) -> Tuple[Subset, Subset]:
     """Split a dataset into training and test subsets."""
     train_idx, test_idx = train_test_split(

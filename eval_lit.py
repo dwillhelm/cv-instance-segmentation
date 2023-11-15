@@ -1,4 +1,3 @@
-#%% 
 import matplotlib.pyplot as plt
 import torch
 from torchvision.io import read_image
@@ -7,7 +6,9 @@ from torchvision.utils import draw_bounding_boxes, draw_segmentation_masks
 from src.models.lit import VGCFModel
 from src.data import get_transform
 
+ckp_path = "./tmp/lightning_logs/version_1/checkpoints/epoch=4-step=340.ckpt"
 ckp_path = "./tmp/checkpoints/epoch=4-step=340.ckpt"
+
 model = VGCFModel.load_from_checkpoint(ckp_path)
 
 image = read_image("./data/PennFudanPed/PNGImages/FudanPed00001.png")
